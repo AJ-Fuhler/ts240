@@ -1,11 +1,17 @@
-const numsAndStrings: Array<string | number> = [1, "2"];
+class Circle {
+  constructor(public radius: number) {}
+}
 
-const matrix: Array<Array<number>> = [
-  [1, 2],
-  [3, 4],
-];
+class Square {
+  constructor(public sideLength: number) {}
+}
 
-const values = [1, "2", false]; //
+type Shape = Circle | Square;
 
-type FruitNames = "apple" | "banana" | "cherry";
-const fruits: Array<FruitNames> = ["apple", "banana", "mango"];
+function describeShape(shape: Shape): void {
+  if (shape instanceof Circle) {
+    console.log(shape.radius);
+  } else {
+    console.log(shape.sideLength);
+  }
+}
