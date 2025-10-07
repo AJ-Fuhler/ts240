@@ -1,13 +1,38 @@
-type Result<T, E> =
-  | {status: "success"; value: T}
-  | {status: "failure"; error: E};
+type Circle = {
+  kind: "circle";
+  radius: number;
+};
 
-function divide(
-  numerator: number,
-  denominator: number
-): Result<number, string> {
-  if (denominator === 0) {
-    return {status: "failure", error: "Division by zero"}
+type Square = {
+  kind: "square";
+  sideLength: number;
+};
+
+type Triangle = {
+  kind: "triangle";
+  base: number;
+  height: number;
+};
+
+type Shape = Circle | Square | Triangle;
+
+function describeShape(shape: Shape) {
+  let area: number;
+
+  switch (shape.kind) {
+    case "circle":
+      area = Math.PI * shape.radius ** 2;
+      break;
+    case "square":
+      area = shape.sideLength ** 2;
+      break;
+    case "triangle":
+      area = 0.5 * shape.base * shape.height;
+      break;
+    default:
+    const _exhaustiveCheck: never = shape;
+    throw new Error(`Invalid shape: ${JSON.stringify(_exhaustiveCheck)}`);
   }
-  return {status: "success", value: numerator / denominator};
+
+  console.log("The area is " + area);
 }
