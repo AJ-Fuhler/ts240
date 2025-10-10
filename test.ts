@@ -1,25 +1,9 @@
-interface MyJSONData {
-  [key: string]:
-    | string
-    | number
-    | boolean
-    | null
-    | MyJSONData
-    | Array<string | number | boolean | null | MyJSONData>;
+function sum(prefix: string, ...numbers: number[]): string {
+  const total = numbers.reduce((total, n) => total + n, 0);
+  return `${prefix}${total}`;
 }
 
-const jsonData: MyJSONData = JSON.parse(
-  '{ "name": "John", "age": 30, "address": { "street": "123 Main St", "city": "Anytown", "state": "CA" }, "hobbies": ["reading", "music"] }'
-);
+type SumParameters = Parameters<typeof sum>;
 
-/*
-Note that the shape of jsonData matches the index signature:
-
-jsonData = {
-  name: "John",
-  age: 30,
-  address: { street: "123 Main St", city: "Anytown", state: "CA" },
-  hobbies: ["reading", "music"],
-};
-
-*/
+const input: SumParameters = ["The total is: ", 1, 2, 3, 4];
+const result = sum(...input);
