@@ -1,9 +1,26 @@
-function sum(prefix: string, ...numbers: number[]): string {
-  const total = numbers.reduce((total, n) => total + n, 0);
-  return `${prefix}${total}`;
+type ApiConfig = {
+  page: number;
+  pageSize: number;
+  sort: "asc" | "desc";
+};
+
+const defaultConfig: ApiConfig = {
+  page: 1,
+  pageSize: 10,
+  sort: "asc",
+};
+
+async function fetchUsers(config: Partial<ApiConfig> = {}): Promise<void> {
+  const finalConfig = { ...defaultConfig, ...config};
+
+  const response = await fetch(
+    `/api/users?page=${finalConfig.page}&pageSize=${finalConfig.pageSize}&sort=${finalConfig.sort}`
+  );
+  const data = await response.json();
+
+  console.log(data);
 }
 
-type SumParameters = Parameters<typeof sum>;
+fetchUsers();
 
-const input: SumParameters = ["The total is: ", 1, 2, 3, 4];
-const result = sum(...input);
+fetchUsers({page: 2, sort: "desc"});
